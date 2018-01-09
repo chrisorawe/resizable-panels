@@ -7,23 +7,38 @@
 	</head>
 	
 	<style>
-		/* ----- Page ----------------------------------------------------------------------------- */
+		/* Page ----------------------------------------------------------------------------------- */
 
 		html, body { padding: 0px; margin: 0px;	height: 100%; font-family: Verdana;	}
 
-		/* ----- Site Layout Setup ---------------------------------------------------------------- */
+		/* Site Layout Setup ---------------------------------------------------------------------- */
 
 		.row, .col { overflow: hidden; position: absolute; }
 		.row { left: 0px; right: 0px; }
 		.col { top: 0px; bottom: 0px; }
 		.scroll-x { overflow-x: scroll; }
+		.scroll-x-auto { overflow-x: auto; }
 		.scroll-y {	overflow-y: scroll; }
+		.scroll-y-auto { overflow-y: auto; }
 		
-		/* ----- Site Layout ---------------------------------------------------------------------- */
+		/* Site Layout ---------------------------------------------------------------------------- */
 		
-		.left {	background-color: red; left: 0;	width: 300px; }
-		.right { background-color: blue; left: 0; right: 0;	margin-left: 300px; }
-		.dragZone { right: 0; width: 10px; background-color: yellow; cursor: col-resize; }
+		.left {	background-color: #005180; left: 0;	width: 300px; }
+		.right { background-color: #005180; left: 0; right: 0;	margin-left: 300px; }
+		.dragZone { right: 0; width: 10px; background-color: lightgrey; cursor: col-resize; }
+		
+		/* Menu ----------------------------------------------------------------------------------- */
+		
+		.menuBackground { position: absolute; background-color: #dfeaf7; top: 5px; left: 5px; right: 15px; bottom: 5px; }		
+			.menuItemOuter { position: relative; margin: 5px; border-width: 2px 2px 2px 0; border-style: solid; border-color: #005180; }
+				.menuItemColour { border-width: 0 20px 0 0; border-style: solid; border-color: white; }
+					.menuItemTextWrapper { border-width: 0 2px 0 0; border-style: solid; border-color: #005180; padding: 5px; overflow: hidden; }
+						.menuItemCheck { width: 20px; float: left; }
+						.menuItemText { margin-left: 25px; }
+		
+		/* TEMP Right panel ----------------------------------------------------------------------- */
+		
+		.empty { position: absolute; top: 5px; left: 5px; right: 5px; bottom: 5px; background-color: #dfeaf7; }
 		
 		/* ---------------------------------------------------------------------------------------- */
 	</style>
@@ -33,28 +48,52 @@
 	<body>
 		
 		<div id="left" class="left col">
+			<div class="menuBackground scroll-x-auto">
+				
+				<div class="menuItemOuter">
+					<div class="menuItemColour">
+						<div class="menuItemTextWrapper">
+							<div class="menuItemCheck"><input type="checkbox" checked></div>
+							<div class="menuItemText">
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec mattis.
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="menuItemOuter"><div class="menuItemColour"><div class="menuItemTextWrapper"><div class="menuItemCheck"><input type="checkbox" checked></div><div class="menuItemText">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec mattis.</div></div></div></div>
+				<div class="menuItemOuter"><div class="menuItemColour"><div class="menuItemTextWrapper"><div class="menuItemCheck"><input type="checkbox" checked></div><div class="menuItemText">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec mattis.</div></div></div></div>
+				<div class="menuItemOuter"><div class="menuItemColour"><div class="menuItemTextWrapper"><div class="menuItemCheck"><input type="checkbox" checked></div><div class="menuItemText">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec mattis.</div></div></div></div>
+				<div class="menuItemOuter"><div class="menuItemColour"><div class="menuItemTextWrapper"><div class="menuItemCheck"><input type="checkbox" checked></div><div class="menuItemText">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec mattis.</div></div></div></div>
+				<div class="menuItemOuter"><div class="menuItemColour"><div class="menuItemTextWrapper"><div class="menuItemCheck"><input type="checkbox" checked></div><div class="menuItemText">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec mattis.</div></div></div></div>
+				
+			</div>
+			
 			<div id="dragZone" class="dragZone col"></div>
 		</div>
 		
-		<div id="right" class="right col"></div>
+		<div id="right" class="right col">
+			<div class="empty"></div>
+		</div>
 		
 		<script>	
 			var dragZoneElement = document.getElementById('dragZone');
 			
 			function resizeCol(event) {
 				var xPos = event.clientX + 10;
-				
-				if (xPos < (window.innerWidth / 2)){
+				var windowInnerWidth = window.innerWidth;
+								
+				if ((xPos >= 0) && (xPos < (windowInnerWidth - (windowInnerWidth * 0.25)))) {
 					document.getElementById('left').style.width = xPos + 'px';
 					document.getElementById('right').style.marginLeft = xPos + 'px';
 				}
 			};
 			
-			dragZoneElement.addEventListener("mousedown", function(event){
+			dragZoneElement.addEventListener("mousedown", function(event) {
 				document.addEventListener("mousemove", resizeCol);
 			});
 			
-			document.addEventListener("mouseup", function(event){
+			document.addEventListener("mouseup", function(event) {
 				document.removeEventListener("mousemove", resizeCol);
 			});
 		</script>
