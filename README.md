@@ -3,5 +3,5 @@ Resizable left menu panel
 
 Nothing special. Just wanted a resizable side panel without any 3rd party lib!
 
-#### Update
+### Update
 Now includes styling and menu items!
