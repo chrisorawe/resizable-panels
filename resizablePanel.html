@@ -82,11 +82,17 @@
 			function resizeCol(event) {
 				var xPos = event.clientX + 10;
 				var windowInnerWidth = window.innerWidth;
-								
-				if ((xPos >= 0) && (xPos < (windowInnerWidth - (windowInnerWidth * 0.25)))) {
-					document.getElementById('left').style.width = xPos + 'px';
-					document.getElementById('right').style.marginLeft = xPos + 'px';
-				}
+				
+				if (xPos < (windowInnerWidth - (windowInnerWidth * 0.25))) {
+					if (xPos >= 0) {
+						document.getElementById('left').style.width = xPos + 'px';
+						document.getElementById('right').style.marginLeft = xPos + 'px';
+					} else {
+						document.removeEventListener("mousemove", resizeCol);
+						document.getElementById('left').style.width = '10px';
+						document.getElementById('right').style.marginLeft = '10px';
+					}
+				}				
 			};
 			
 			dragZoneElement.addEventListener("mousedown", function(event) {
