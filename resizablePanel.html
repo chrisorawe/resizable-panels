@@ -25,7 +25,8 @@
 		
 		.left {	background-color: #005180; left: 0;	width: 300px; }
 		.right { background-color: #005180; left: 0; right: 0;	margin-left: 300px; }
-		.dragZone { right: 0; width: 10px; background-color: lightgrey; cursor: col-resize; }
+		.dragZone { right: 0; width: 10px; background-color: lightgrey; cursor: col-resize; margin: 1px 0 2px 0; }
+		.dragZoneMask { background-color: transparent; left: 0; right: 0; z-index: 40; display: none; }
 		
 		/* Menu ----------------------------------------------------------------------------------- */
 		
@@ -76,8 +77,14 @@
 			<div class="empty"></div>
 		</div>
 		
+		<div id="dragZoneMask" class="dragZoneMask col"></div>
+		
 		<script>	
 			var dragZoneElement = document.getElementById('dragZone');
+			var dragZoneMaskElement = document.getElementById('dragZoneMask');
+
+			dragZoneMaskElement.onselectstart = function() { return false; }
+			dragZoneMaskElement.onmousedown = function() { return false; }
 			
 			function resizeCol(event) {
 				var xPos = event.clientX + 10;
@@ -96,10 +103,12 @@
 			};
 			
 			dragZoneElement.addEventListener("mousedown", function(event) {
+				dragZoneMaskElement.style.display = 'block';
 				document.addEventListener("mousemove", resizeCol);
 			});
 			
 			document.addEventListener("mouseup", function(event) {
+				dragZoneMaskElement.style.display = 'none';
 				document.removeEventListener("mousemove", resizeCol);
 			});
 		</script>
